@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TripIdea</string>
     <string name="server_client_id">840839894249-kn4qcp6sd6cncn42m2suhnukbkkh1fuq.apps.googleusercontent.com</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

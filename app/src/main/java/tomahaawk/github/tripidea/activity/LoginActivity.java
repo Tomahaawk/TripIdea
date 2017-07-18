@@ -1,4 +1,4 @@
-package tomahaawk.github.tripidea;
+package tomahaawk.github.tripidea.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -24,6 +24,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import tomahaawk.github.tripidea.R;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 
