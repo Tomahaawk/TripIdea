@@ -1,8 +1,6 @@
 package tomahaawk.github.tripidea.fragments;
 
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,17 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tomahaawk.github.tripidea.R;
 import tomahaawk.github.tripidea.adapters.ViewPagerAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CheckinFragment extends Fragment implements TabHost.OnTabChangeListener{
 
     @BindView(R.id.tab_layout) TabLayout tabLayout;

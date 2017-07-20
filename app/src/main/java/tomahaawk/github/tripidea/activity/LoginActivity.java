@@ -25,6 +25,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tomahaawk.github.tripidea.R;
+import tomahaawk.github.tripidea.helper.FirebaseConfig;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseConfig.getFirebaseAuth();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_client_id))
@@ -88,10 +89,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         } else {
 
-           /* String email = account.getEmail();
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("EMAIL", email);
-            startActivity(intent); */
+           /*TODO*/
         }
     }
 
@@ -105,18 +103,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                         if(task.isSuccessful()) {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            openMainActivity(user);
+                            openMainActivity();
 
                         }
                     }
                 });
     }
 
-    private void openMainActivity(FirebaseUser user) {
-
-        String email = user.getEmail();
+    private void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("EMAIL", email);
         startActivity(intent);
 
     }

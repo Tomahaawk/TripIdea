@@ -10,11 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar"/>
+
         <FrameLayout
             android:id="@+id/fragment_container_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_nav_id"/>
+            android:layout_above="@+id/bottom_nav_id" >
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_checkin_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="24dp"
+                android:visibility="visible"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_trips_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="24dp"
+                android:visibility="invisible"/>
+        </FrameLayout>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_nav_id"
