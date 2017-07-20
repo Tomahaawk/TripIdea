@@ -1,6 +1,9 @@
 package tomahaawk.github.tripidea.model;
 
+import android.net.Uri;
+
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 
 import tomahaawk.github.tripidea.helper.FirebaseConfig;
 
@@ -17,9 +20,10 @@ public class User {
     public void saveUser() {
 
         DatabaseReference databaseReference = FirebaseConfig.getDatabaseReference();
-        databaseReference.child("usuarios").child( getId() ).setValue( this );
+        databaseReference.child("users").child( getId() ).setValue( this );
     }
 
+    @Exclude
     public String getId() {
         return id;
     }
