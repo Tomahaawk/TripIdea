@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">TripIdea</string>
-    <string name="server_client_id">840839894249-kn4qcp6sd6cncn42m2suhnukbkkh1fuq.apps.googleusercontent.com</string>
+    <string name="app_name" translatable="false">TripIdea</string>
+    <string name="server_client_id" translatable="false">840839894249-kn4qcp6sd6cncn42m2suhnukbkkh1fuq.apps.googleusercontent.com</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_followers">Seguidores</string>
+    <string name="profile_following">Seguindo</string>
+    <string name="profile_follow_number">0</string>
 </resources>

@@ -1,11 +1,15 @@
 package tomahaawk.github.tripidea.activity;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -24,23 +28,26 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tomahaawk.github.tripidea.R;
 import tomahaawk.github.tripidea.helper.Base64Converter;
 import tomahaawk.github.tripidea.helper.FirebaseConfig;
+import tomahaawk.github.tripidea.helper.Preferences;
 import tomahaawk.github.tripidea.model.User;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
 
     @BindView(R.id.bt_login_id) SignInButton bt_login;
+    @BindView(R.id.imageView2)
+    ImageView backGroundImage;
 
     private DatabaseReference userReference;
     private FirebaseAuth firebaseAuth;
     private GoogleApiClient mGoogleApiClient;
 
-    private String signedInUser;
     private User newUser;
 
 
@@ -50,10 +57,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        loadBackgroundImage();
+
         firebaseAuth = FirebaseConfig.getFirebaseAuth();
+        verifyUserAlreadyAuthenticated(firebaseAuth);
+
         userReference = FirebaseConfig.getDatabaseReference().child("users");
-
-
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_client_id))
@@ -120,9 +129,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                             instantiateUser(account);
 
+                            newUser.setId(firebaseAuth.getCurrentUser().getUid());
                             userReference = FirebaseConfig.getDatabaseReference().child("users").child(newUser.getId());
 
-                            userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            ValueEventListener newUserListener = new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.exists()) {
@@ -136,9 +146,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 public void onCancelled(DatabaseError databaseError) {
 
                                 }
-                            });
+                            };
+                            userReference.addListenerForSingleValueEvent(newUserListener);
 
-                            openMainActivity(account);
+                            Preferences sharedPreferences = new Preferences(getApplicationContext());
+                            sharedPreferences.saveUserInfo(newUser.getId(), newUser.getName());
+                            openMainActivity();
 
                         } else {
                             /*TODO*
@@ -149,11 +162,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 });
     }
 
-    private void openMainActivity(GoogleSignInAccount account) {
+    private void openMainActivity() {
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        finish();
+        this.finish();
 
     }
 
@@ -166,9 +179,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         newUser.setEmail(account.getEmail());
         newUser.setName(account.getDisplayName());
         newUser.setPhotoUrl(stringPhotoUrl);
-        signedInUser = Base64Converter.toBase64(account.getEmail());
-        newUser.setId(signedInUser);
+    }
 
+    private void loadBackgroundImage() {
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int height = size.y;
+        int width = size.x;
+
+        Picasso.with(this).load(R.drawable.login_background).resize(width, height).centerCrop().noFade().into(backGroundImage);
+
+    }
+
+    private void verifyUserAlreadyAuthenticated(FirebaseAuth firebaseAuth) {
+
+        if(firebaseAuth.getCurrentUser() != null) {
+            openMainActivity();
+        }
 
     }
 

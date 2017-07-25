@@ -6,47 +6,47 @@
     android:layout_height="match_parent"
     tools:context="tomahaawk.github.tripidea.activity.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/toolbar"
-            android:id="@+id/toolbar"/>
 
         <FrameLayout
             android:id="@+id/fragment_container_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_nav_id" >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_checkin_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="24dp"
-                android:visibility="visible"/>
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_trips_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="24dp"
-                android:visibility="invisible"/>
         </FrameLayout>
 
-        <android.support.design.widget.BottomNavigationView
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_checkin_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:visibility="visible"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_trips_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:visibility="invisible"/>
+
+    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+        android:id="@+id/ah_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:layout_insetEdge="bottom">
+    </com.aurelhubert.ahbottomnavigation.AHBottomNavigation>
+
+<!--        <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_nav_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
             app:itemBackground="@color/colorPrimary"
             app:itemIconTint="@drawable/nav_item_color_state"
             app:itemTextColor="@drawable/nav_item_color_state"
-            app:menu="@menu/bottom_nav_menu" />
-
-    </RelativeLayout>
-
+            app:menu="@menu/bottom_nav_menu"/>-->
 
 </android.support.design.widget.CoordinatorLayout>
