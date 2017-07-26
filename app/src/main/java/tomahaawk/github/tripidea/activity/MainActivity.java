@@ -1,6 +1,7 @@
 package tomahaawk.github.tripidea.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -37,11 +38,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("EMAIL");
 
         setUpBottomNav();
 
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-      /*  bottomNavigationView.setSelectedItemId(0);
+        /*bottomNavigationView.setSelectedItemId(0);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -84,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             }
-        });*/
-
+        });
+*/
 
     }
 
@@ -150,9 +148,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpBottomNav() {
-        AHBottomNavigationItem checkinItem = new AHBottomNavigationItem("Check-ins", R.mipmap.ic_launcher);
-        AHBottomNavigationItem tripsItem = new AHBottomNavigationItem("Trips", R.mipmap.ic_launcher);
-        AHBottomNavigationItem profileItem = new AHBottomNavigationItem("Profile", R.mipmap.ic_launcher);
+        AHBottomNavigationItem checkinItem = new AHBottomNavigationItem("Check-ins", R.drawable.ic_pin_drop);
+        AHBottomNavigationItem tripsItem = new AHBottomNavigationItem("Trips", R.drawable.ic_flight);
+        AHBottomNavigationItem profileItem = new AHBottomNavigationItem("Profile", R.drawable.ic_person);
+
+        ahBottomNavigation.setBackgroundColor(Color.parseColor("#64B5F6"));
+        ahBottomNavigation.setAccentColor(Color.parseColor(Integer.toString(R.color.colorAccent)));
+        ahBottomNavigation.setInactiveColor(Color.parseColor(Integer.toString(R.color.colorPrimaryLight)));
 
         ahBottomNavigation.addItem(checkinItem);
         ahBottomNavigation.addItem(tripsItem);
@@ -168,13 +170,24 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTabSelected(int position, boolean wasSelected) {
                 switch (position) {
                     case 0:
-                        changeFragment(0);
+                        if(currentFragment != 0) {
+                            changeFragment(0);
+                            currentFragment = 0;
+                        }
                         break;
+
                     case 1:
-                        changeFragment(1);
+                        if(currentFragment != 1) {
+                            changeFragment(1);
+                            currentFragment = 1;
+                        }
                         break;
+
                     case 2:
-                        changeFragment(2);
+                        if(currentFragment != 2) {
+                            changeFragment(2);
+                            currentFragment = 2;
+                        }
                         break;
                 }
 

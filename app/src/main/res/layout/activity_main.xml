@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/anchor"
+    android:fitsSystemWindows="true"
     tools:context="tomahaawk.github.tripidea.activity.MainActivity">
 
 
@@ -12,23 +14,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
         </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:src="@drawable/ic_add_location"
         android:id="@+id/fab_checkin_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="72dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="bottom|end"
         android:visibility="visible"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_trips_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
         android:visibility="invisible"/>
 
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
