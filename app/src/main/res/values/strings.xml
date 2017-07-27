@@ -2,7 +2,9 @@
     <string name="app_name" translatable="false">TripIdea</string>
     <string name="server_client_id" translatable="false">840839894249-kn4qcp6sd6cncn42m2suhnukbkkh1fuq.apps.googleusercontent.com</string>
 
-    <string name="profile_followers">Seguidores</string>
-    <string name="profile_following">Seguindo</string>
-    <string name="profile_follow_number">0</string>
+    <string name="profile_friends">Amigos</string>
+    <string name="profile_friends_count">0</string>
+
+    <string name="color_Primary">#546e7a</string>
+    <string name="color_Accent">#00bcd4</string>
 </resources>

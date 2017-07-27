@@ -43,8 +43,6 @@ public class ProfileFragment extends Fragment {
     TextView tvProfileName;
     @BindView(R.id.civ_profile_picture)
     CircleImageView profilePicture;
-    @BindView(R.id.tv_followers_number) TextView tvFollowerNumber;
-    @BindView(R.id.tv_following_number) TextView tvFollowingNumber;
     @BindView(R.id.tv_logout) TextView tvLogout;
 
     private ValueEventListener eventListener;
@@ -67,11 +65,9 @@ public class ProfileFragment extends Fragment {
 
         sharedPreferences = new Preferences(getActivity());
         userId = sharedPreferences.getUserId();
-        //userId = Base64Converter.toBase64("lucasthefurius@gmail.com");
 
         databaseReference = FirebaseConfig.getDatabaseReference().child("users").child(userId);
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference databaseReference = database.getReference("users/" + "T8B18aasFGZudQtxh0KNpQ5XQuJ2");
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

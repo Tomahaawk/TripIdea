@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -27,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.fab_checkin_id) FloatingActionButton fabCheckin;
     @BindView(R.id.fab_trips_id) FloatingActionButton fabTrips;
-    //@BindView(R.id.bottom_nav_id) BottomNavigationView bottomNavigationView;
     @BindView(R.id.ah_bottom_nav) AHBottomNavigation ahBottomNavigation;
 
     private boolean defaultFabHide = false;
@@ -54,36 +54,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        /*bottomNavigationView.setSelectedItemId(0);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-
-                    case R.id.checkins:
-                        if (currentFragment != 0) {
-                            changeFragment(0);
-                            currentFragment = 0;
-                        }
-                        break;
-                    case R.id.trips:
-                        if(currentFragment != 1) {
-                            changeFragment(1);
-                            currentFragment = 1;
-                        }
-                        break;
-                    case R.id.profile:
-                        if(currentFragment != 2) {
-                            changeFragment(2);
-                            currentFragment = 2;
-                        }
-                        break;
-                }
-                return true;
-            }
-        });
-*/
 
     }
 
@@ -152,16 +122,19 @@ public class MainActivity extends AppCompatActivity {
         AHBottomNavigationItem tripsItem = new AHBottomNavigationItem("Trips", R.drawable.ic_flight);
         AHBottomNavigationItem profileItem = new AHBottomNavigationItem("Profile", R.drawable.ic_person);
 
-        ahBottomNavigation.setBackgroundColor(Color.parseColor("#64B5F6"));
-        ahBottomNavigation.setAccentColor(Color.parseColor(Integer.toString(R.color.colorAccent)));
-        ahBottomNavigation.setInactiveColor(Color.parseColor(Integer.toString(R.color.colorPrimaryLight)));
+        final int colorPrimary = ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null);
+        final int colorIcons = ResourcesCompat.getColor(getResources(), R.color.icons, null);
+        final int colorInactiveItem = ResourcesCompat.getColor(getResources(), R.color.divider, null);
+
+        ahBottomNavigation.setDefaultBackgroundColor(colorPrimary);
+        ahBottomNavigation.setAccentColor(colorIcons);
+        ahBottomNavigation.setInactiveColor(colorInactiveItem);
 
         ahBottomNavigation.addItem(checkinItem);
         ahBottomNavigation.addItem(tripsItem);
         ahBottomNavigation.addItem(profileItem);
 
         ahBottomNavigation.setBehaviorTranslationEnabled(false);
-        ahBottomNavigation.setColored(true);
 
         ahBottomNavigation.manageFloatingActionButtonBehavior(fabCheckin);
         ahBottomNavigation.manageFloatingActionButtonBehavior(fabTrips);

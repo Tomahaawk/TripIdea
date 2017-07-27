@@ -7,6 +7,7 @@
     tools:context="tomahaawk.github.tripidea.activity.CheckinActivity">
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_save_checkin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
