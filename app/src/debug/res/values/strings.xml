@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCSNE04VnQ06B3YElcLFUBKo5-XInMWzqU</string>
+    <string name="server_client_id" translatable="false">840839894249-kn4qcp6sd6cncn42m2suhnukbkkh1fuq.apps.googleusercontent.com</string>
 </resources>

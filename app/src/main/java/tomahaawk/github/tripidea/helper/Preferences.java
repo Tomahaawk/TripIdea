@@ -9,6 +9,7 @@ public class Preferences {
     private static final int MODE = Context.MODE_PRIVATE;
     private static final String KEY_USER_ID = "loggedUserId";
     private static final String KEY_USER_NAME = "loggedUserName";
+    private static final String KEY_USER_PHOTOURL = "loggedUserPhotoUrl";
 
     private Context context;
     private SharedPreferences preferences;
@@ -20,9 +21,10 @@ public class Preferences {
         this.editor = preferences.edit();
     }
 
-    public void saveUserInfo (String userId, String userName) {
+    public void saveUserInfo (String userId, String userName, String photoUrl) {
         editor.putString(KEY_USER_ID, userId);
         editor.putString(KEY_USER_NAME, userName);
+        editor.putString(KEY_USER_PHOTOURL, photoUrl);
         editor.commit();
     }
 
@@ -33,4 +35,6 @@ public class Preferences {
     public String getUserName() {
         return preferences.getString(KEY_USER_NAME, null);
     }
+
+    public String getUserPhotourl() { return preferences.getString(KEY_USER_PHOTOURL, null); }
 }

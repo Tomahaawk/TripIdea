@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             userReference.addListenerForSingleValueEvent(newUserListener);
 
                             Preferences sharedPreferences = new Preferences(getApplicationContext());
-                            sharedPreferences.saveUserInfo(newUser.getId(), newUser.getName());
+                            sharedPreferences.saveUserInfo(newUser.getId(), newUser.getName(), newUser.getPhotoUrl());
                             openMainActivity();
 
                         } else {

@@ -45,6 +45,8 @@ public class MyCheckinFragment extends Fragment {
 
     private ArrayList<Checkin> userCheckinsList;
     private String userId;
+    private String userName;
+    private String userPhotoUrl;
     private User currentUser;
 
 
@@ -63,17 +65,23 @@ public class MyCheckinFragment extends Fragment {
 
         Preferences sharedPreferences = new Preferences(getContext());
         userId = sharedPreferences.getUserId();
+        userName = sharedPreferences.getUserName();
+        userPhotoUrl = sharedPreferences.getUserPhotourl();
 
-        getCurrentUser();
+        currentUser = new User();
+        currentUser.setPhotoUrl(userPhotoUrl);
+        currentUser.setName(userName);
 
         getUserCheckins();
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        //getCurrentUser();
 
         recyclerViewAdapter = new CheckinRecyclerViewAdapter(getContext(), currentUser, userCheckinsList);
         recyclerView.setAdapter(recyclerViewAdapter);
-
 
         return view;
     }
@@ -81,21 +89,23 @@ public class MyCheckinFragment extends Fragment {
     private void getUserCheckins() {
 
         databaseReference = FirebaseConfig.getDatabaseReference().child("checkins").child(userId);
-
         eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot != null) {
+                userCheckinsList.clear();
+
+                if(dataSnapshot != null && dataSnapshot.exists()) {
 
                     GenericTypeIndicator<HashMap<String,Checkin>> typeIndicator = new GenericTypeIndicator<HashMap<String,Checkin>>() {};
                     HashMap<String,Checkin> checkinHashMap = dataSnapshot.getValue(typeIndicator);
-                    //ArrayList<Checkin> checkinArrayList = new ArrayList<>();
                     Collection<Checkin> checkinItems = checkinHashMap.values();
-                    userCheckinsList.addAll(checkinItems);
 
-                    recyclerViewAdapter.notifyDataSetChanged();
+                    userCheckinsList.addAll(checkinItems);
+                    
                 }
+
+                recyclerViewAdapter.notifyDataSetChanged();
 
             }
 
@@ -109,9 +119,8 @@ public class MyCheckinFragment extends Fragment {
 
     private void getCurrentUser() {
 
-        if(currentUser == null) {
             databaseReference = FirebaseConfig.getDatabaseReference().child("users").child(userId);
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            ValueEventListener userEventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot != null) {
@@ -123,8 +132,10 @@ public class MyCheckinFragment extends Fragment {
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
-            });
-        }
+            };
+
+            databaseReference.addListenerForSingleValueEvent(userEventListener);
+
 
 
     }

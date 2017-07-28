@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profile_followers">Followers</string>
-    <string name="profile_following">Following</string>
+    <string name="profile_friends">Friends</string>
 </resources>

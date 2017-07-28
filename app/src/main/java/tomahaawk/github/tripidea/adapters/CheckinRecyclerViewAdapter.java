@@ -19,6 +19,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import tomahaawk.github.tripidea.R;
 import tomahaawk.github.tripidea.model.Checkin;
@@ -33,20 +35,18 @@ public class CheckinRecyclerViewAdapter extends RecyclerView.Adapter<CheckinRecy
     public class ViewHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback{
         private View v;
         private GoogleMap gMap;
-        private MapView mapView;
+
+        @BindView(R.id.user_pic_checkin_layout) CircleImageView profilePicture;
+        @BindView(R.id.user_name_checkin_layout) TextView userName;
+        @BindView(R.id.map_lite) MapView mapView;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             v = itemView;
+            ButterKnife.bind(this, v);
 
-            mapView = (MapView) itemView.findViewById(R.id.map_lite);
-
-            if(mapView != null) {
-                mapView.onCreate(null);
-                mapView.onResume();
-                mapView.getMapAsync(this);
-            }
+            initializeMapView();
 
         }
 
@@ -55,8 +55,18 @@ public class CheckinRecyclerViewAdapter extends RecyclerView.Adapter<CheckinRecy
 
             MapsInitializer.initialize(context);
             gMap = googleMap;
+            mapView.onResume();
+            notifyDataSetChanged();
 
         }
+
+        public void initializeMapView() {
+            if(mapView != null) {
+                mapView.onCreate(null);
+                mapView.getMapAsync(this);
+            }
+        }
+
     }
 
     public CheckinRecyclerViewAdapter (Context context, User user, ArrayList<Checkin> data) {
@@ -72,29 +82,36 @@ public class CheckinRecyclerViewAdapter extends RecyclerView.Adapter<CheckinRecy
 
         ViewHolder vh = new ViewHolder(view);
 
-
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
-        CircleImageView profilePicture = (CircleImageView) holder.v.findViewById(R.id.user_pic_checkin_layout);
-        TextView userName = (TextView) holder.v.findViewById(R.id.user_name_checkin_layout);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         Checkin checkin = checkins.get(position);
 
-        userName.setText(user.getName());
-        Picasso.with(context).load(user.getPhotoUrl()).noFade().into(profilePicture);
+        holder.userName.setText(this.user.getName());
+        Picasso.with(context).load(this.user.getPhotoUrl()).noFade().into(holder.profilePicture);
 
-        GoogleMap thisMap = holder.gMap;
-        if(thisMap != null) {
-            thisMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(checkin.getLatitude(),checkin.getLongitude()), 10) );
+        LatLng latLng = new LatLng(checkin.getLatitude(),checkin.getLongitude());
+
+        if(holder.gMap != null) {
+            holder.gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10) );
 
         }
 
     }
+
+    @Override
+    public void onViewRecycled(ViewHolder holder) {
+
+            if(holder != null && holder.gMap != null) {
+                holder.gMap.clear();
+                //holder.gMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+            }
+    }
+
+
 
     @Override
     public int getItemCount() {

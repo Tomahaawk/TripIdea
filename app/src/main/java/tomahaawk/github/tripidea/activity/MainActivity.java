@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         ahBottomNavigation.addItem(tripsItem);
         ahBottomNavigation.addItem(profileItem);
 
-        ahBottomNavigation.setBehaviorTranslationEnabled(false);
+        ahBottomNavigation.setBehaviorTranslationEnabled(true);
 
         ahBottomNavigation.manageFloatingActionButtonBehavior(fabCheckin);
         ahBottomNavigation.manageFloatingActionButtonBehavior(fabTrips);
