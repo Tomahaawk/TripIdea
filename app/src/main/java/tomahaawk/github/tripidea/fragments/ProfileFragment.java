@@ -1,16 +1,31 @@
 package tomahaawk.github.tripidea.fragments;
 
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elmargomez.typer.Font;
 import com.elmargomez.typer.Typer;
@@ -27,14 +42,13 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import tomahaawk.github.tripidea.R;
 import tomahaawk.github.tripidea.activity.LoginActivity;
+import tomahaawk.github.tripidea.activity.SearchActivity;
+import tomahaawk.github.tripidea.adapters.ViewPagerAdapter;
 import tomahaawk.github.tripidea.helper.Base64Converter;
 import tomahaawk.github.tripidea.helper.FirebaseConfig;
 import tomahaawk.github.tripidea.helper.Preferences;
 import tomahaawk.github.tripidea.model.User;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ProfileFragment extends Fragment {
 
     @BindView(R.id.collapsingtb_layout_id)
@@ -43,14 +57,19 @@ public class ProfileFragment extends Fragment {
     TextView tvProfileName;
     @BindView(R.id.civ_profile_picture)
     CircleImageView profilePicture;
-    @BindView(R.id.tv_logout) TextView tvLogout;
+
+    @BindView(R.id.search_friends)
+    LinearLayout searchFriends;
+
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.viewpager_profile)
+    ViewPager viewPager;
 
     private ValueEventListener eventListener;
     private User user;
     private String userId;
 
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
     private Preferences sharedPreferences;
 
     public ProfileFragment() {
@@ -63,10 +82,22 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
 
+        searchFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+
         sharedPreferences = new Preferences(getActivity());
         userId = sharedPreferences.getUserId();
 
-        databaseReference = FirebaseConfig.getDatabaseReference().child("users").child(userId);
+        DatabaseReference databaseReference = FirebaseConfig.getDatabaseReference().child("users").child(userId);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -88,26 +119,26 @@ public class ProfileFragment extends Fragment {
 
         Typeface font = Typer.set(getContext()).getFont(Font.ROBOTO_MEDIUM);
         tvProfileName.setTypeface(font);
-        tvLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                logOut();
-            }
-        });
 
 
         return view;
     }
 
-    private void logOut() {
-
-        firebaseAuth = FirebaseConfig.getFirebaseAuth();
-        firebaseAuth.signOut();
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
     }
+
+
+    private void setupViewPager(ViewPager viewPager) {
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFrag(new FriendsFragment(), "Amigos");
+        adapter.addFrag(new SettingsFragment(), "Configuracoes");
+        viewPager.setAdapter(adapter);
+
+    }
+
 
 }

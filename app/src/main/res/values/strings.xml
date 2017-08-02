@@ -6,4 +6,7 @@
 
     <string name="color_Primary">#546e7a</string>
     <string name="color_Accent">#00bcd4</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
