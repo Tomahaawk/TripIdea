@@ -19,18 +19,15 @@ import com.google.firebase.database.ValueEventListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import tomahaawk.github.tripidea.R;
+import tomahaawk.github.tripidea.activity.SearchActivity;
 import tomahaawk.github.tripidea.adapters.ViewPagerAdapter;
 import tomahaawk.github.tripidea.helper.FirebaseConfig;
+import tomahaawk.github.tripidea.helper.Preferences;
+import tomahaawk.github.tripidea.model.User;
 
 
 public class FriendsFragment extends Fragment {
 
-    @BindView(R.id.nameFriend)
-    EditText friendName;
-    @BindView(R.id.listviewFriends)
-    ListView listViewFriends;
-    @BindView(R.id.searchFriends)
-    Button searchFriends;
 
     private DatabaseReference databaseReference;
 
@@ -41,43 +38,15 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         View view  = inflater.inflate(R.layout.fragment_friends, container, false);
         ButterKnife.bind(this, view);
 
-        databaseReference = FirebaseConfig.getDatabaseReference().child("users");
-
-        searchFriends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String queryString = friendName.getText().toString();
-
-                //searchForUsers(queryString);
-
-            }
-        });
 
         return view;
     }
 
-    private void searchForUsers(String email) {
-
-        databaseReference.startAt(email).orderByChild("email").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot != null && dataSnapshot.exists()) {
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-
 }
+
+

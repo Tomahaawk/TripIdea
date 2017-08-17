@@ -106,7 +106,7 @@ public class ProfileFragment extends Fragment {
                 if(dataSnapshot != null) {
                    user = dataSnapshot.getValue(User.class);
                    tvProfileName.setText(user.getName());
-                   Picasso.with(getContext()).load(user.getPhotoUrl()).noFade().into(profilePicture);
+                   Picasso.with(getContext()).load(user.getPhotoUrl()).placeholder(R.mipmap.ic_launcher).noFade().into(profilePicture);
 
                 }
             }
@@ -135,7 +135,7 @@ public class ProfileFragment extends Fragment {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFrag(new FriendsFragment(), "Amigos");
-        adapter.addFrag(new SettingsFragment(), "Configuracoes");
+        adapter.addFrag(new SettingsFragment(), "Configuraçoes");
         viewPager.setAdapter(adapter);
 
     }

@@ -107,7 +107,6 @@ public class CheckinRecyclerViewAdapter extends RecyclerView.Adapter<CheckinRecy
 
             if(holder != null && holder.gMap != null) {
                 holder.gMap.clear();
-                //holder.gMap.setMapType(GoogleMap.MAP_TYPE_NONE);
             }
     }
 
